@@ -1,11 +1,11 @@
 include("cmake_utils/gather_subdirs.cmake")
 
-function(configure_subprojects main_project_name out_link_libraries)
+function(configure_subprojects main_project_name out_link_libraries unit_tests_file_tag)
     get_filename_component(abs_include_dir "../include/${main_project_name}" REALPATH)
     gather_subdirs(subdirs ${abs_include_dir})
     foreach(subdir ${subdirs})
         set(subproject_name ${main_project_name}.${subdir})
-        set(file_excludes ".*\\.tests.*")
+        set(file_excludes ".*\\${unit_tests_file_tag}.*")
 		fill_platform_excludes(platform_excludes)
 		list(APPEND file_excludes ${platform_excludes})
 		gather_files(header_files true "../include/${main_project_name}/${subdir}/*.h;../include/${main_project_name}/${subdir}/*.inl;../src/${subdir}/*.h;../src/${subdir}/*.inl" "${file_excludes}")

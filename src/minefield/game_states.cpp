@@ -1,7 +1,7 @@
-#include "game_states.h"
-#include "types.h"
-#include "constants.h"
-#include "utils.h"
+#include <minefield/game_states.h>
+#include <minefield/types.h>
+#include <minefield/constants.h>
+#include <minefield/utils.h>
 
 #include <iostream>
 #include <cstdio>
@@ -70,7 +70,7 @@ namespace GameStates
     {
         std::cout << PlayerCreation::kHeader;
 
-        auto newPlayer = [](std::string const& name, int initialMines)
+        auto newPlayer = [](std::string const& name, unsigned int initialMines)
             {
                 Player player;
                 player.name = name;

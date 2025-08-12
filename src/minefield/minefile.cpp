@@ -1,6 +1,6 @@
-#include "game_states.h"
-#include "types.h"
-#include "utils.h"
+#include <minefield/game_states.h>
+#include <minefield/types.h>
+#include <minefield/utils.h>
 
 #include <iostream>
 

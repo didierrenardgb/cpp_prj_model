@@ -2,7 +2,7 @@
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER _cmake_targets)
 
-function(setup_visual_studio_filters erase_tokens for_files project_name)
+function(setup_visual_studio_filters erase_tokens for_files)
     foreach (_source IN ITEMS ${${for_files}})
         if (IS_ABSOLUTE "${_source}")
             file(RELATIVE_PATH _source_rel "${CMAKE_CURRENT_SOURCE_DIR}/.." "${_source}")

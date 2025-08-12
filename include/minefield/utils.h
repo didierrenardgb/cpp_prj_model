@@ -9,6 +9,7 @@
 
 namespace Utils
 {
+    int getStateValue(PositionState state);
     unsigned int enterNumberInRange(const char* message, unsigned int min, unsigned int max);
     void initializeBoard(Board& board, unsigned int height, unsigned int width);
     bool nameExists(std::string const& name, std::vector<Player> const& players);
