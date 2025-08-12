@@ -4,6 +4,7 @@
 
 namespace minefield::utils::tests
 {
+    
 TEST(createRandomNumberInRangeFn, should_return) 
 {
     int num = Utils::createRandomNumberInRange(10);
