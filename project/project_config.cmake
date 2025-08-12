@@ -7,6 +7,10 @@ set(project_config_use_clang_tidy true)
 set(project_config_use_unit_tests true)
 set(project_config_use_benchmark true)
 set(project_config_recursive_file_gathering true) # When set to false, it'll create sub-projects for nested folders in include/${project_config_name} folders
+set(project_config_vs_header_filters_erase_tokens "include;src") # When creating VS filters, it'll remove those from the paths the files belong to
+set(project_config_vs_source_filters_erase_tokens "src") # Same as above, now for sources instead of header files
+set(project_config_unit_tests_file_tag ".tests") # "Tag" files containing unit tests related stuff are identified with (i.e. MyModule.tests.cpp)
+set(project_config_benchmark_file_tag ".bench") # Same as above, but for benchmark files
 
 include(FetchContent)
 FetchContent_Declare(
