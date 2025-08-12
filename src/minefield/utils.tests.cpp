@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <minefield/utils.h>
+#include <minefield/types.h>
 
 namespace minefield::utils::tests
 {

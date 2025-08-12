@@ -1,7 +1,7 @@
-#include <minefield/game_states.h>
-#include <minefield/types.h>
-#include <minefield/constants.h>
-#include <minefield/utils.h>
+#include <cpp_prj_model_vs/game_states.h>
+#include <cpp_prj_model_vs/types.h>
+#include <cpp_prj_model_vs/constants.h>
+#include <cpp_prj_model_vs/utils.h>
 
 #include <iostream>
 #include <cstdio>
@@ -70,7 +70,7 @@ namespace GameStates
     {
         std::cout << PlayerCreation::kHeader;
 
-        auto newPlayer = [](std::string const& name, unsigned int initialMines)
+        auto newPlayer = [](std::string const& name, int initialMines)
             {
                 Player player;
                 player.name = name;
