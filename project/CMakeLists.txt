@@ -39,19 +39,21 @@ set(file_excludes ".*\\${project_config_unit_tests_file_tag}.*" ".*\\${project_c
 fill_platform_excludes(platform_excludes)
 list(APPEND file_excludes ${platform_excludes})
 gather_files(header_files ${project_config_recursive_file_gathering} "../include/${project_config_name}/*.hpp;../include/${project_config_name}/*.h;../include/${project_config_name}/*.inl;../src/*.hpp;../src/*.h;../src/*.inl" "${file_excludes}")
-gather_files(src_files ${project_config_recursive_file_gathering} "../src/*.cpp" "${file_excludes}")
+gather_files(src_files ${project_config_recursive_file_gathering} "../src/${project_config_name}/*.cpp" "${file_excludes}")
+list(APPEND src_files "../src/main.cpp")
 
 if (project_config_extra_sources)
     list(APPEND src_files "${project_config_extra_sources}")
 endif()
 
 if (${project_config_use_unit_tests})
-    set(file_patterns "../src/*${project_config_unit_tests_file_tag}.cpp")
+    set(file_patterns "../src/${project_config_name}/*.tests.cpp")
+    set(project_config_unit_tests_extra_sources "../src/${project_config_name}/*.cpp")
     if (project_config_unit_tests_extra_sources)
         list(APPEND file_patterns "${project_config_unit_tests_extra_sources}")
     endif()
     gather_files(test_files true "${file_patterns}" "${platform_excludes}")
-    gather_files(test_headers true "../src/*${project_config_unit_tests_file_tag}.h" "${platform_excludes}")
+    gather_files(test_headers true "../src/*.tests.h" "${platform_excludes}")
 endif()
 
 if (${project_config_use_benchmark})
@@ -60,7 +62,7 @@ if (${project_config_use_benchmark})
         list(APPEND file_patterns "${project_config_benchmark_extra_sources}")
     endif()
     gather_files(benchmark_files true "${file_patterns}" "${platform_excludes}")
-    gather_files(benchmark_headers true "../src/*${project_config_benchmark_file_tag}.h" "${platform_excludes}")
+    gather_files(benchmark_headers true "../src/*.bench.h" "${platform_excludes}")
 endif()
 ###
 
@@ -105,4 +107,3 @@ endif()
 
 setup_visual_studio_filters("${project_config_vs_header_filters_erase_tokens}" header_files)
 setup_visual_studio_filters("${project_config_vs_source_filters_erase_tokens}" src_files)
-###

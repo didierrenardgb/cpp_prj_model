@@ -1,6 +1,6 @@
 # Rename this file to project_config.cmake for it to take effect
 
-set(project_config_name "cpp_prj_model") # Replace cpp_prj_model with your project's name
+set(project_config_name "minefield") # Replace cpp_prj_model with your project's name
 set(project_config_type EXE) # STATIC, SHARED, EXE
 set(project_config_cpp_std 20)
 set(project_config_use_clang_tidy true)
