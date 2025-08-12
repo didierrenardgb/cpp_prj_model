@@ -31,11 +31,11 @@ if (NOT link_libraries)
 endif()
 
 if (NOT ${project_config_recursive_file_gathering})
-    configure_subprojects(${PROJECT_NAME} link_targets)
+    configure_subprojects(${PROJECT_NAME} link_targets ${project_config_unit_tests_file_tag})
 endif()
 
 ### Gather files and put them in folders
-set(file_excludes ".*\\.tests.*" ".*\\.bench.*")
+set(file_excludes ".*\\${project_config_unit_tests_file_tag}.*" ".*\\${project_config_benchmark_file_tag}.*")
 fill_platform_excludes(platform_excludes)
 list(APPEND file_excludes ${platform_excludes})
 gather_files(header_files ${project_config_recursive_file_gathering} "../include/${project_config_name}/*.hpp;../include/${project_config_name}/*.h;../include/${project_config_name}/*.inl;../src/*.hpp;../src/*.h;../src/*.inl" "${file_excludes}")
@@ -46,21 +46,21 @@ if (project_config_extra_sources)
 endif()
 
 if (${project_config_use_unit_tests})
-    set(file_patterns "../src/*.tests.cpp")
+    set(file_patterns "../src/*${project_config_unit_tests_file_tag}.cpp")
     if (project_config_unit_tests_extra_sources)
         list(APPEND file_patterns "${project_config_unit_tests_extra_sources}")
     endif()
     gather_files(test_files true "${file_patterns}" "${platform_excludes}")
-    gather_files(test_headers true "../src/*.tests.h" "${platform_excludes}")
+    gather_files(test_headers true "../src/*${project_config_unit_tests_file_tag}.h" "${platform_excludes}")
 endif()
 
 if (${project_config_use_benchmark})
-    set(file_patterns "../src/*.bench.cpp")
+    set(file_patterns "../src/*${project_config_benchmark_file_tag}.cpp")
     if (project_config_benchmark_extra_sources)
         list(APPEND file_patterns "${project_config_benchmark_extra_sources}")
     endif()
     gather_files(benchmark_files true "${file_patterns}" "${platform_excludes}")
-    gather_files(benchmark_headers true "../src/*.bench.h" "${platform_excludes}")
+    gather_files(benchmark_headers true "../src/*${project_config_benchmark_file_tag}.h" "${platform_excludes}")
 endif()
 ###
 
@@ -103,6 +103,6 @@ if (project_config_${PROJECT_NAME}_make_external AND (src_files OR header_files)
     set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX FOLDER ${project_folder})
 endif()
 
-setup_visual_studio_filters("${PROJECT_NAME};include;src" header_files ${PROJECT_NAME})
-setup_visual_studio_filters("${PROJECT_NAME};src" src_files ${PROJECT_NAME})
+setup_visual_studio_filters("${project_config_vs_header_filters_erase_tokens}" header_files)
+setup_visual_studio_filters("${project_config_vs_source_filters_erase_tokens}" src_files)
 ###
