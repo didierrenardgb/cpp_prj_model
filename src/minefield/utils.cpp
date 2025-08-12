@@ -1,4 +1,4 @@
-#include "utils.h"
+#include <minefield/utils.h>
 
 #include <iostream>
 #include <iomanip>
