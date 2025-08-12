@@ -4,6 +4,7 @@
 #include <random>
 #include <functional>
 #include <string>
+#include <minefield/shared.h>
 
 struct State;
 struct GameContext;
@@ -37,13 +38,6 @@ struct Player
     std::vector<unsigned int> mines;
     std::vector<unsigned int> guesses;
 };
-
-inline std::mt19937 initializeRandomGenerator()
-{
-    std::random_device rd;
-    std::mt19937 randomGenerator(rd());
-    return randomGenerator;
-}
 
 struct RandomGenerator
 {
