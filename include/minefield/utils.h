@@ -14,12 +14,12 @@ namespace Utils
     void initializeBoard(Board& board, unsigned int height, unsigned int width);
     bool nameExists(std::string const& name, std::vector<Player> const& players);
     int whoHasLessAvailableMines(Players const& players);
-    unsigned int createRandomNumberInRange(int max);
-    MinePosition createRandomBoardPosition(unsigned int width, unsigned int height);
+    unsigned int createRandomNumberInRange(int max); // getRandomNumberInRange
+    MinePosition createRandomBoardPosition(unsigned int width, unsigned int height); // getRandomBoardPosition
     MinePosition enterBoardPosition(unsigned int width, unsigned int height, Player const& player, RandomPosFn randomPos);
     std::string showInvalidPositionReason(PositionState const& state);
     bool isInvalidPosition(PositionState const& state);
-    MinePosition validBoardPosition(unsigned int width, unsigned int height, Player const& player);
+    MinePosition validBoardPosition(unsigned int width, unsigned int height, Player const& player); // validBoardPositionState
     void enterMine(GameContext& context, Player& player);
     void savePlayerMines(Player& player);
     void savePlayerGuesses(Player& player);
