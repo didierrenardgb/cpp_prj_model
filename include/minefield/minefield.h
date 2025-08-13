@@ -8,8 +8,8 @@
 
 struct State;
 struct GameContext;
-typedef State NextState;
-typedef NextState (*StateUpdateFn)(GameContext &);
+using NextState = State;
+using StateUpdateFn = NextState(*)(GameContext &);
 
 struct State
 {
