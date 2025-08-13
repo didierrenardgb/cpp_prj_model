@@ -1,22 +1,18 @@
+#include <minefield/minefield.h>
+#include <minefield/setup_game.h>
+#include <minefield/shared.h>
+#include <minefield/show_board.h>
 #include <iostream>
 #include <limits>
-#include <minefield/minefield.h>
-#include <minefield/show_board.h>
-#include <minefield/shared.h>
 
-int readIntInRange(unsigned int min, unsigned int max)
+int readIntInRange(unsigned int min, unsigned int max, GetInputFn<unsigned int> getInput)
 {
     unsigned int input = 0;
     bool validInput = false;
+
     while (!validInput)
     {
-        std::cin >> input;
-        if (std::cin.fail())
-        {
-            clearStandardInput();
-            std::cout << "Invalid move! Digits only, sneaky miner!" << std::endl;
-            continue;
-        }
+        input = getInput();
         validInput = input >= min && input <= max;
         if (!validInput)
         {
@@ -26,7 +22,7 @@ int readIntInRange(unsigned int min, unsigned int max)
     return input;
 }
 
-void createPlayers(GameContext &context, unsigned int humanPlayers, unsigned int computerPlayers)
+void createPlayers(GameContext& context, unsigned int humanPlayers, unsigned int computerPlayers, GetInputFn<std::string> getInput)
 {
     context.players.clear();
     std::vector<std::string> usedNames;
@@ -40,7 +36,7 @@ void createPlayers(GameContext &context, unsigned int humanPlayers, unsigned int
         while (!validName)
         {
             std::cout << "What's the name of human player #" << playerNumber << "? ";
-            std::cin >> name;
+            name = getInput();
 
             validName = std::find(usedNames.begin(), usedNames.end(), name) == usedNames.end();
             if (!validName)
@@ -67,13 +63,12 @@ void createPlayers(GameContext &context, unsigned int humanPlayers, unsigned int
         player.name = "Computer_" + std::to_string(i + 1);
         player.type = PlayerType::Computer;
         std::cout << "Our creative team (the compiler) named computer player #" << playerNumber << ": " << player.name << std::endl;
-
         context.players.push_back(player);
         ++playerNumber;
     }
 }
 
-NextState setupGame(GameContext &context)
+NextState setupGame(GameContext& context)
 {
     std::cout << "=================================" << std::endl;
     std::cout << "Welcome to Minefield, brave soul!" << std::endl;
@@ -81,24 +76,24 @@ NextState setupGame(GameContext &context)
     std::cout << "Let's start defining the basics of the game" << std::endl;
 
     std::cout << "First things first: how many human players will be joining the game? (up to 5!)" << std::endl;
-    int humanPlayers = readIntInRange(1, 5);
+    int humanPlayers = readIntInRange(1, 5, getInputFromCin);
 
     std::cout << "And how many fearless computer-controlled players shall we unleash? (again, no more than 5)" << std::endl;
-    int computerPlayers = readIntInRange(0, 5);
+    int computerPlayers = readIntInRange(0, 5, getInputFromCin);
 
     std::cout << "Perfect! That makes us " << humanPlayers + computerPlayers << ". Now, to keep things organized, let's name our heroes." << std::endl;
-    createPlayers(context, humanPlayers, computerPlayers);
+    createPlayers(context, humanPlayers, computerPlayers, getInputFromCin);
 
     std::cout << "Let's craft the board now. How many tiles across? (it should be a number between 24 and 50)" << std::endl;
-    context.board.width = readIntInRange(5, 50);
+    context.board.width = readIntInRange(24, 50, getInputFromCin);
 
     std::cout << "Now, how many tiles from top to bottom? (again, between 24 and 50)" << std::endl;
-    context.board.height = readIntInRange(5, 50);
+    context.board.height = readIntInRange(24, 50, getInputFromCin);
 
     std::cout << "Final step: how many mines should we drop? (let's say, between 3 and 8)" << std::endl;
-    context.board.initialMines = readIntInRange(3, 8);
+    context.board.initialMines = readIntInRange(3, 8, getInputFromCin);
 
-    for (Player &player : context.players)
+    for (Player& player : context.players)
     {
         player.mines = std::vector<unsigned int>(context.board.initialMines);
         player.guesses = std::vector<unsigned int>(context.board.initialMines);
